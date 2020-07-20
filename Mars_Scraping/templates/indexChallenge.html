@@ -17,6 +17,47 @@
                 <!-- Add a button to activate scraping script -->
                 <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
             </div>
+            <div class="row" id="hemi-photos">
+                <div class="col-md-12">
+                    <h2>Featured Photos: Mars Hemispheres</h2>
+                </div>
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ mars.hemisphere_urls[0]['img_url'] }}" alt="Card image cap" width="200" height="200">
+                        <div class="card-body">
+                            <h5 class="card-title">Cerberus Hemisphere</h5>
+                            <a href="/hem1" class="btn btn-primary">See Photo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ mars.hemisphere_urls[1]['img_url'] }}" alt="Card image cap" width="200" height="200">
+                        <div class="card-body">
+                            <h5 class="card-title">Schiaparelli Hemisphere</h5>
+                            <a href="/hem2" class="btn btn-danger">See Photo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ mars.hemisphere_urls[2]['img_url'] }}" alt="Card image cap" width="200" height="200">
+                        <div class="card-body">
+                            <h5 class="card-title">Syrtis Major Hemisphere</h5>
+                            <a href="/hem3" class="btn btn-warning">See Photo</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ mars.hemisphere_urls[3]['img_url'] }}" alt="Card image cap" width="200" height="200">
+                        <div class="card-body">
+                            <h5 class="card-title">Valles Marineris Hemisphere</h5>
+                            <a href="/hem4" class="btn btn-success">See Photo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Mars News -->
             <div class="row" id="mars-news">
                 <div class="col-md-12">
@@ -37,12 +78,12 @@
                         src="{{ mars.featured_image }}" 
                         class="img-responsive" 
                         alt="Responsive image"
-                    />
+                    /><br>
                 </div>
                 <div class="col-md-4">
                     <!-- Mars Facts -->
                     <div class="row" id="mars-facts">
-                        <h4>Mars Facts</h4>
+                        <h2>Mars Facts</h2>
                         {{ mars.facts | safe }}
                     </div>
                 </div>

@@ -17,6 +17,7 @@ def scrape_all():
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
+        "hemisphere_urls": hemisphere_imgs(browser), 
         "facts": mars_facts(),
         "last_modified": dt.datetime.now()
     }
@@ -48,7 +49,6 @@ def mars_news(browser):
 
     return news_title, news_p
 
-
 def featured_image(browser):
     # Visit URL
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -79,6 +79,42 @@ def featured_image(browser):
 
     return img_url
 
+def hemisphere_imgs(browser):
+    
+    hemis = ['Cerberus Hemisphere', 'Schiaparelli Hemisphere', 'Syrtis Major Hemisphere', 'Valles Marineris Hemisphere']
+    urls = []
+    hemi_dicts = []
+    
+    for hemi in hemis:
+        
+        # Visit URL
+        url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+        browser.visit(url)
+
+        # Find and click the full image button
+        hemi_image_elem = browser.links.find_by_partial_text(f'{hemi} Enhanced')
+        hemi_image_elem.click()
+
+        # Parse the resulting html with soup
+        html = browser.html
+        img_soup = BeautifulSoup(html, 'html.parser')
+
+        try:
+            # find the relative image url
+            hemi_img_src = img_soup.find('img', class_='wide-image').get("src")
+
+        except AttributeError:
+            return None
+
+        # Use the base URL to create an absolute URL
+        hemi_img_url = f'https://astrogeology.usgs.gov/{hemi_img_src}'
+
+        hemi_dict = {'title': hemi, 'img_url': hemi_img_url}
+        hemi_dicts.append(hemi_dict)
+        urls.append(hemi_img_url)
+
+    return hemi_dicts
+
 def mars_facts():
     try:
         # use 'read_html" to scrape the facts table into a dataframe
@@ -91,7 +127,6 @@ def mars_facts():
     df.set_index('description', inplace=True)
 
     return df.to_html()
-
 
 if __name__ == "__main__":
     # If running as script, print scraped data
